@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: 
+  custName: 
+  custContact: 
+  amt: 
+  downPymt: 
+  interestRate: 
+  monthsDuration: 
+  addlMonthlyPymt: 
+  addlYearlyPymt: 
+  interestSaved: 
+  monthsSaved: 1
+
+two:
+  name: 
+  custName: 
+  custContact: 
+  amt: 
+  downPymt: 
+  interestRate: 
+  monthsDuration: 
+  addlMonthlyPymt: 
+  addlYearlyPymt: 
+  interestSaved: 
+  monthsSaved: 1
