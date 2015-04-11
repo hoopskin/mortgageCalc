@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get 'mortgage/addMortgage'
 
+  get 'mortgage/deleteMortgage'
+
   get 'mortgage/amortization'
 
   # The priority is based upon order of creation: first created -> highest priority.

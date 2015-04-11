@@ -1,4 +1,11 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<style>
+#rcorners2 {
+    display: inline-block;
+    border-radius: 25px;
+    border: 2px solid #8AC007;
+    padding: 20px; 
+}
+</style>
 
 <h1>Mortgage#home</h1>
 <p>Find me in app/views/mortgage/home.html.erb</p>
@@ -55,4 +62,17 @@
   <br />
   <br />
   <%= submit_tag("Submit") %>
+<% end %>
+<% Mortgage.all.each do |mortgage| %>
+	<div id="rcorners2">
+	<h4><%= mortgage.name %></h4>
+	<b>Amount: </b><%= mortgage.amt %><br />
+	<b>Monthly Pymt: </b><%= mortgage.monthlyPymt %><br />
+	<%= form_tag("/mortgage/deleteMortgage", method: "get") do %>
+		<%= submit_tag "Delete " + mortgage.name %>
+	<% end %>
+	<%= form_tag("/mortgage/amortization", method: "get") do %>
+		<%= submit_tag "Amortize " + mortgage.name %>
+	<% end %>
+	</div>
 <% end %>

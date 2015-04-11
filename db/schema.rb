@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409153006) do
+ActiveRecord::Schema.define(version: 20150409232044) do
 
   create_table "mortgages", force: :cascade do |t|
     t.string   "name"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20150409153006) do
     t.integer  "monthsSaved"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "monthlyPymt"
+    t.integer  "interestPaid"
   end
 
 end

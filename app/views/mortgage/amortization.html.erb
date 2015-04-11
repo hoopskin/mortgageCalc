@@ -1,2 +1,22 @@
-<h1>Mortgage#amortization</h1>
-<p>Find me in app/views/mortgage/amortization.html.erb</p>
+<h1>Amortization Schedule</h1>
+<a href="/mortgage/home">Go Back</a>
+<br />
+<br />
+<table class="table table-hover table-condensed">
+	<tr>
+		<th>Payment #</th>
+		<th>Payment</th>
+		<th>Interest Payment</th>
+		<th>Principle Payment</th>
+		<th>Amount Left</th>
+	</tr>
+	<% @totalArray.each do |line| %>
+		<tr>
+			<td><%= (@totalArray.index line)+1 %></td>
+			<td><%= number_to_currency(line[0]) %></td>
+			<td><%= number_to_currency(line[2]) %></td>
+			<td><%= number_to_currency(line[1]) %></td>
+			<td><%= number_to_currency(line[3]) %></td>
+		</tr>
+	<% end %>
+</table>
