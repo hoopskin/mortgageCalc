@@ -1,0 +1,46 @@
+<h1>Mortgage Calculator - Clone</h1>
+
+<div style="display: inline-block;">
+	<%= form_tag("/mortgage/clone", method: "get") do %>
+		<br />
+		<%= label_tag(:reqNote, "NOTE: * denotes required fields!") %>
+		<br />
+		<%= label_tag(:name, "Mortgage Name*: ") %>
+		<%= text_field_tag(:name) %>
+		<br />
+		<%= label_tag(:custName, "Customer Name*: ") %>
+		<%= text_field_tag(:custName) %>
+		<br />
+		<%= label_tag(:custContact, "Customer Phone Number*: ") %>
+		<%= phone_field_tag(:custContact) %>
+		<br />
+		<%= label_tag(:amt, "Mortgage Amount*: $") %>
+		<%= number_field_tag(:amt) %>
+		<br />
+		<%= label_tag(:downPymt, "Down Payment Amount*: $") %>
+		<%= number_field_tag(:downPymt) %>
+		<br />
+		<%= label_tag(:interestRate, "Interest Rate*: ") %>
+		<%= number_field_tag(:interestRate) %>%
+		<br />
+		<br />
+		<%= label_tag(:duration, "Duration*") %>
+		<br />
+		<%= label_tag(:yearsDuration, "Years: ") %>
+		<%= number_field_tag(:yearsDuration) %>
+		<%= label_tag(:monthsDuration, "Months: ") %>
+		<%= number_field_tag(:monthsDuration) %>
+		<br />
+		<br />
+		<%= label_tag(:addlPymts, "Additional Payments") %>
+		<br />
+		<%= label_tag(:addlMonthlyPymt, "Monthly: $") %>
+		<%= number_field_tag(:addlMonthlyPymt) %>
+		<br />
+		<%= label_tag(:addlYearlyPymt, "Yearly: $") %>
+		<%= number_field_tag(:addlYearlyPymt) %>
+	  <br />
+	  <br />
+	  <%= submit_tag("Submit") %>
+	<% end %>
+</div>

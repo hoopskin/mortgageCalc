@@ -2,13 +2,12 @@
 #rcorners2 {
     display: inline-block;
     border-radius: 25px;
-    border: 2px solid #8AC007;
+    border: 2px solid #000000;
     padding: 20px; 
 }
 </style>
 
-<h1>Mortgage#home</h1>
-<p>Find me in app/views/mortgage/home.html.erb</p>
+<h1>Mortgage Calculator</h1>
 
 <% if flash[:error] %>
   <div class="alert alert-warning">
@@ -21,58 +20,93 @@
   </div>
 <% end %>
 
-<%= form_tag("/mortgage/addMortgage", method: "get") do %>
-	<br />
-	<%= label_tag(:reqNote, "NOTE: * denotes required fields!") %>
-	<br />
-	<%= label_tag(:name, "Mortgage Name*: ") %>
-	<%= text_field_tag(:name) %>
-	<br />
-	<%= label_tag(:custName, "Customer Name*: ") %>
-	<%= text_field_tag(:custName) %>
-	<br />
-	<%= label_tag(:custContact, "Customer Phone Number*: ") %>
-	<%= phone_field_tag(:custContact) %>
-	<br />
-	<%= label_tag(:amt, "Mortgage Amount*: $") %>
-	<%= number_field_tag(:amt) %>
-	<br />
-	<%= label_tag(:downPymt, "Down Payment Amount*: $") %>
-	<%= number_field_tag(:downPymt) %>
-	<br />
-	<%= label_tag(:interestRate, "Interest Rate*: ") %>
-	<%= number_field_tag(:interestRate) %>%
-	<br />
-	<br />
-	<%= label_tag(:duration, "Duration*") %>
-	<br />
-	<%= label_tag(:yearsDuration, "Years: ") %>
-	<%= number_field_tag(:yearsDuration) %>
-	<%= label_tag(:monthsDuration, "Months: ") %>
-	<%= number_field_tag(:monthsDuration) %>
-	<br />
-	<br />
-	<%= label_tag(:addlPymts, "Additional Payments") %>
-	<br />
-	<%= label_tag(:addlMonthlyPymt, "Monthly: $") %>
-	<%= number_field_tag(:addlMonthlyPymt) %>
-	<br />
-	<%= label_tag(:addlYearlyPymt, "Yearly: $") %>
-	<%= number_field_tag(:addlYearlyPymt) %>
-  <br />
-  <br />
-  <%= submit_tag("Submit") %>
-<% end %>
+<div style="display: inline-block;">
+	<%= form_tag("/mortgage/addMortgage", method: "get") do %>
+		<br />
+		<%= label_tag(:reqNote, "NOTE: * denotes required fields!") %>
+		<br />
+		<%= label_tag(:name, "Mortgage Name*: ") %>
+		<%= text_field_tag(:name) %>
+		<br />
+		<%= label_tag(:custName, "Customer Name*: ") %>
+		<%= text_field_tag(:custName) %>
+		<br />
+		<%= label_tag(:custContact, "Customer Phone Number*: ") %>
+		<%= phone_field_tag(:custContact) %>
+		<br />
+		<%= label_tag(:amt, "Mortgage Amount*: $") %>
+		<%= number_field_tag(:amt) %>
+		<br />
+		<%= label_tag(:downPymt, "Down Payment Amount*: $") %>
+		<%= number_field_tag(:downPymt) %>
+		<br />
+		<%= label_tag(:interestRate, "Interest Rate*: ") %>
+		<%= number_field_tag(:interestRate) %>%
+		<br />
+		<br />
+		<%= label_tag(:duration, "Duration*") %>
+		<br />
+		<%= label_tag(:yearsDuration, "Years: ") %>
+		<%= number_field_tag(:yearsDuration) %>
+		<%= label_tag(:monthsDuration, "Months: ") %>
+		<%= number_field_tag(:monthsDuration) %>
+		<br />
+		<br />
+		<%= label_tag(:addlPymts, "Additional Payments") %>
+		<br />
+		<%= label_tag(:addlMonthlyPymt, "Monthly: $") %>
+		<%= number_field_tag(:addlMonthlyPymt) %>
+		<br />
+		<%= label_tag(:addlYearlyPymt, "Yearly: $") %>
+		<%= number_field_tag(:addlYearlyPymt) %>
+	  <br />
+	  <br />
+	  <%= submit_tag("Submit") %>
+	<% end %>
+</div>
+<div style="display: inline-block;">
 <% Mortgage.all.each do |mortgage| %>
-	<div id="rcorners2">
+	<div id="rcorners2" class="<%= mortgage.name %>">
 	<h4><%= mortgage.name %></h4>
-	<b>Amount: </b><%= mortgage.amt %><br />
-	<b>Monthly Pymt: </b><%= mortgage.monthlyPymt %><br />
+	<b>Customer Name: </b><span id="custName"><%= mortgage.custName %></span><br />
+	<b>Customer Contact: </b><span id="custContact"><%= mortgage.custContact %></span><br />
+	<b>Amount: </b><span id="amt"><%= number_to_currency(mortgage.amt) %></span><br />
+	<b>Down Pymt: </b><span id="downPymt"><%= number_to_currency(mortgage.downPymt) %></span><br />
+	<b>Interest Rate: </b><span id="interestRate"><%= mortgage.interestRate %>%</span><br />
+	<b>Duration (in months): </b><span id="monthsDuration"><%= mortgage.monthsDuration %></span><br />
+	<b>Monthly Pymt: </b><span id="monthlyPymt"><%= number_to_currency(mortgage.monthlyPymt) %></span><br />
+	<h5>Savings</h5>
+	<b>Add'l Monthly Pymt: </b><span id="addlMonthlyPymt"><%= number_to_currency(mortgage.addlMonthlyPymt) %></span><br />
+	<b>Add'l Yearly Pymt: </b><span id="addlYearlyPymt"><%= number_to_currency(mortgage.addlYearlyPymt) %></span><br />
+	<b>Interest Saved: </b><span id="interestSaved"><%= number_to_currency(mortgage.interestSaved) %></span><br />
+	<b>Months Saved: </b><span id="monthsSaved"><%= mortgage.monthsSaved %></span><br />
 	<%= form_tag("/mortgage/deleteMortgage", method: "get") do %>
 		<%= submit_tag "Delete " + mortgage.name %>
 	<% end %>
 	<%= form_tag("/mortgage/amortization", method: "get") do %>
 		<%= submit_tag "Amortize " + mortgage.name %>
 	<% end %>
+	<button onclick="editMortgage('<%= mortgage.name %>')">Edit / Clone Mortgage</button>
 	</div>
 <% end %>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+function editMortgage(mortName) {
+	var vals = ['custName', 'custContact', 'amt', 'downPymt', 'interestRate', 'monthsDuration', 'monthlyPymt', 'addlMonthlyPymt', 'addlYearlyPymt'];
+	
+	$('#name').val(mortName);
+
+	for (i = 0 ; i < vals.length ; i++) {
+		var text = $('.'+mortName+' > #'+vals[i]).text();
+		if($.inArray(i,[2,3,4,7,8]) != -1) {
+			text = Number(text.replace(/[^0-9\.]+/g,""));
+		}
+		if(i==5) {
+			$('#yearsDuration').val(parseInt(text/12))
+			text = text%12;
+		}
+		$('#'+vals[i]).val(text);
+	}
+}
+</script>

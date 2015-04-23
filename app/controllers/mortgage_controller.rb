@@ -2,20 +2,35 @@ class MortgageController < ApplicationController
   def home
   end
 
+  def edit
+
+  end
+
+  def clone
+  	redirect_to :action => "addMortgage"
+  end
+
   def addMortgage
   	#Data Validation
   	@errorMsgs = ""
 
   	#All Req'd feilds are filled in
-	if params[:name].length == 0 || params[:custName].length == 0 || params[:custContact].length == 0 || params[:amt].length == 0 || params[:downPymt].length == 0 || params[:interestRate].length == 0 || params[:yearsDuration].length == 0 || params[:monthsDuration].length == 0
+	if params[:name].length == 0 || params[:custName].length == 0 || params[:custContact].length == 0 || params[:amt].length == 0 || params[:downPymt].length == 0 || params[:interestRate].length == 0 || (params[:yearsDuration].length == 0 && params[:monthsDuration].length == 0)
 		@errorMsgs += "One or more required fields were not filled!"
   	end
 
+  	if params[:yearsDuration] == "0" && params[:monthsDuration] == "0"
+  		@errorMsgs += "Total duration is zero. Please fix!"
+  	end
 
   	if @errorMsgs.length > 0
   		flash[:error] = @errorMsgs
   	else
-  		@m = Mortgage.new
+  		if(Mortgage.find_by_name(params[:name]).nil?)
+  			@m = Mortgage.new
+  		else
+  			@m = Mortgage.find_by_name(params[:name])
+  		end
 		@m.name = params[:name]
 		@m.custName = params[:custName]
 		@m.custContact = params[:custContact]
